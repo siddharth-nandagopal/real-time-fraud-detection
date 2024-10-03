@@ -11,5 +11,50 @@
 	```
 	~bin/> kafka-topics --create --topic fraud-alerts --bootstrap-server kafka01:9092 --partitions 3 --replication-factor 3
 	```
-3. Start [transaction_producer](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/transaction_producer)
-4. Make sure to start [fraud_detector](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/fraud_detector)
+3. Install dependencies
+	```
+	asdf install
+	
+	poetry install
+	```
+4. Start [transaction_producer](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/transaction_producer)
+	```
+	python3 transaction_producer.py 
+	```
+5. Start [fraud_detector](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/fraud_detector)
+	```
+	python3 fraud_detector.py 
+	```
+6. Start [fraud_handler](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/fraud_handler)
+	```
+	python3 fraud_handler.py 
+	```
+
+
+
+
+# Troubleshoot guide/frequent issues
+
+### Issue:
+```
+Traceback (most recent call last):
+  File "/real-time-fraud-detection/transaction_producer/transaction_producer.py", line 1, in <module>
+    from kafka import KafkaProducer
+  File ".asdf/installs/python/3.12.0/lib/python3.12/site-packages/kafka/__init__.py", line 21, in <module>
+    from kafka.consumer import KafkaConsumer
+  File ".asdf/installs/python/3.12.0/lib/python3.12/site-packages/kafka/consumer/__init__.py", line 3, in <module>
+    from .simple import SimpleConsumer
+  File ".asdf/installs/python/3.12.0/lib/python3.12/site-packages/kafka/consumer/simple.py", line 13, in <module>
+    from kafka.vendor.six.moves import queue # pylint: disable=import-error
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'kafka.vendor.six.moves'
+```
+#### Solution:
+```
+pip install kafka-python-ng
+```
+(or)
+```
+poetry add --group=main kafka-python-ng
+```
+refer: https://github.com/dpkp/kafka-python/issues/2412#issuecomment-2030459360
