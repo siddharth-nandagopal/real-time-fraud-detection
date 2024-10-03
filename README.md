@@ -1,3 +1,9 @@
+# Real-Time Fraud Detection with Apache Kafka
+
+In today's financial environment, real-time fraud detection is vital for secure payment processing. Apache Kafka, known for its high throughput and low latency, is an excellent tool for building a fraud detection system. This guide will lead you through the steps to set up a real-time fraud detection system using Kafka, from installation to implementation.
+
+## Objective
+The goal is to identify potentially fraudulent transactions as they occur by analyzing payment data in real time.
 
 # Getting Started
 
@@ -14,7 +20,7 @@
 3. Install dependencies
 	```
 	asdf install
-	
+
 	poetry install
 	```
 4. Start [transaction_producer](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/transaction_producer)
