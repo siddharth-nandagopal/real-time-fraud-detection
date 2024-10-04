@@ -35,8 +35,14 @@ The goal is to identify potentially fraudulent transactions as they occur by ana
 	```
 	python3 fraud_handler.py 
 	```
+7. Start [fraud_api](https://github.com/siddharth-nandagopal/real-time-fraud-detection/tree/development/fraud_api)
+	```
+	python3 main.py
+	```
 
-
+# TODO
+react UI to display alerts
+ML?
 
 
 # Troubleshoot guide/frequent issues
@@ -64,3 +70,48 @@ pip install kafka-python-ng
 poetry add --group=main kafka-python-ng
 ```
 refer: https://github.com/dpkp/kafka-python/issues/2412#issuecomment-2030459360
+
+
+
+
+
+### Issues:
+```
+Because no versions of fastapi match >0.115.0,<0.116.0
+ and fastapi (0.115.0) depends on starlette (>=0.37.2,<0.39.0), fastapi (>=0.115.0,<0.116.0) requires starlette (>=0.37.2,<0.39.0).
+So, because real-time-fraud-detection depends on both starlette (^0.39.2) and fastapi (^0.115.0), version solving failed.
+```
+#### Solution:
+set the starlette version to be >=0.37.2 and <0.39.0, which is 0.38.6
+set the fastapi version to be >=0.115.0 and <0.116.0
+
+
+### Issues:
+```
+Traceback (most recent call last):
+  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/main.py", line 3, in <module>
+    from app import app
+  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/app/__init__.py", line 5, in <module>
+    from app.routers import FraudRouter
+  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/app/routers/FraudRouter.py", line 4, in <module>
+    from app.controllers.FraudController import FraudController as controller
+```
+#### Solution:
+naming convention
+
+
+
+### Issue:
+Connects to mongodb using mongoengine, still returns empty list
+#### Solution: 
+set 'collection' property inside 'meta' attribute in the model definition
+
+
+### Issue:
+Object of type Alert is not JSON serializable
+#### Solution:
+application is larger or you have more complex objects, consider using a serialization library like marshmallow or pydantic
+(OR)
+queryset.to_json()
+
+
