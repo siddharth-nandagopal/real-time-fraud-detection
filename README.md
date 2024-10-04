@@ -39,6 +39,8 @@ The goal is to identify potentially fraudulent transactions as they occur by ana
 	```
 	python3 main.py
 	```
+	GET http://127.0.0.1:8000/alerts
+	
 
 # TODO
 react UI to display alerts
@@ -102,6 +104,10 @@ naming convention -
 2. Name of the file that defines the model shall be all lowercase (eg: alert.py). It must match the name of the <Prefix>Controller (eg: AlertController.py). It must match the name of the file that deines the routers and all lowercase (eg: alerts.py).
 3. Each directory that holds files that are used as a modules elsewhere, must have '__init__.py' file.
 4. Almost without exception, class names use the CapWords convention. Classes for internal use have a leading underscore in addition.
+References:
+1. https://w3.cs.jmu.edu/spragunr/CS240_F12/style_guide.shtml#:~:text=Package%20and%20Module%20Names%20Modules,use%20of%20underscores%20is%20discouraged.
+2. https://medium.com/@leeli0830/8-python-naming-convention-you-must-know-bbab94735b93
+3. https://discuss.python.org/t/how-exactly-does-init-py-influence-module-search-order/24759 
 
 
 
