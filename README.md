@@ -97,7 +97,11 @@ Traceback (most recent call last):
     from app.controllers.FraudController import FraudController as controller
 ```
 #### Solution:
-naming convention
+naming convention - 
+1. Modules should have short, all-lowercase names.  Underscores can be used in the module name if it improves readability.  Python packages should also have short, all-lowercase names, although the use of underscores is discouraged.
+2. Name of the file that defines the model shall be all lowercase (eg: alert.py). It must match the name of the <Prefix>Controller (eg: AlertController.py). It must match the name of the file that deines the routers and all lowercase (eg: alerts.py).
+3. Each directory that holds files that are used as a modules elsewhere, must have '__init__.py' file.
+4. Almost without exception, class names use the CapWords convention. Classes for internal use have a leading underscore in addition.
 
 
 
