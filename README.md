@@ -40,6 +40,14 @@ The goal is to identify potentially fraudulent transactions as they occur by ana
 	python3 main.py
 	```
 	GET http://127.0.0.1:8000/alerts
+8. Run test:
+	```
+	python3 -m unittest tests.test_alert
+	```
+	(OR)
+	```
+	pytest tests.test_alert
+	```
 	
 
 # TODO
@@ -91,11 +99,11 @@ set the fastapi version to be >=0.115.0 and <0.116.0
 ### Issues:
 ```
 Traceback (most recent call last):
-  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/main.py", line 3, in <module>
+  File "/real-time-fraud-detection/fraud_api/main.py", line 3, in <module>
     from app import app
-  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/app/__init__.py", line 5, in <module>
+  File "/real-time-fraud-detection/fraud_api/app/__init__.py", line 5, in <module>
     from app.routers import FraudRouter
-  File "/Users/snandagopal/workspace/kkk-space/real-time-fraud-detection/fraud_api/app/routers/FraudRouter.py", line 4, in <module>
+  File "/real-time-fraud-detection/fraud_api/app/routers/FraudRouter.py", line 4, in <module>
     from app.controllers.FraudController import FraudController as controller
 ```
 #### Solution:
@@ -125,3 +133,57 @@ application is larger or you have more complex objects, consider using a seriali
 queryset.to_json()
 
 
+### Issue:
+```
+Traceback (most recent call last):
+  File "/real-time-fraud-detection/fraud_api/tests/test_alert.py", line 9, in <module>
+    from app import app
+ModuleNotFoundError: No module named 'app'
+```
+
+Module Execution: Note that if you run test_alert.py directly, you might encounter an import error due to how relative imports work. To execute the script properly, you can run it from the top level of your project.
+
+```
+Traceback (most recent call last):
+  File "/real-time-fraud-detection/fraud_api/tests/test_alert.py", line 9, in <module>
+    from ..app import app
+ImportError: attempted relative import with no known parent package
+```
+#### Solution:
+To execute the script properly, you can run it from the top level of your project.
+To run test_alert.py, navigate to the fraud_api directory and execute:
+```
+python3 -m tests.test_alert
+```
+
+
+### Issue:
+```
+E
+======================================================================
+ERROR: setUpClass (tests.test_alert.TestAlert)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/real-time-fraud-detection/fraud_api/tests/test_alert.py", line 31, in setUpClass
+    connect('mongoenginetest', host='mongomock://localhost/mocking_db')
+  File "/.asdf/installs/python/3.12.0/lib/python3.12/site-packages/mongoengine/connection.py", line 469, in connect
+    register_connection(alias, db, **kwargs)
+  File "/.asdf/installs/python/3.12.0/lib/python3.12/site-packages/mongoengine/connection.py", line 253, in register_connection
+    conn_settings = _get_connection_settings(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/.asdf/installs/python/3.12.0/lib/python3.12/site-packages/mongoengine/connection.py", line 120, in _get_connection_settings
+    raise Exception(
+Exception: Use of mongomock:// URI or 'is_mock' were removed in favor of 'mongo_client_class=mongomock.MongoClient'. Check the CHANGELOG for more info
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+```
+The error message indicates that there is an issue with how one is trying to connect to a mocked MongoDB instance using mongomock in one's tests. The mongomock:// URI is no longer supported in the version of mongoengine one is using.
+#### Solution:
+One need to use mongo_client_class=mongomock.MongoClient in one's connection settings. Here's how one can adjust one's setUpClass method:
+```
+# Connect to the mock database
+connect('mongoenginetest', mongo_client_class=MongoClient)
+```

@@ -10,7 +10,7 @@ class Alert(Document):
 
     meta = {
         'collection': 'fraud_alert_collection',
-        'ordering': ['-timestamp'],
+        'ordering': ['-timestamp'], # +timestamp means ascending (vs) -timestamp means descending
         'indexes': [
             {'fields': ['transaction_id'], 'expireAfterSeconds': 3600},
             {'fields': ['user_id'], 'expireAfterSeconds': 3600}
